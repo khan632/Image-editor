@@ -25,6 +25,7 @@ main section {
     gap: var(--gutter-lg);
 }
 
+/* component style */
 .btn {
     padding: var(--padding-sm) var(--padding-lg);
     border: none;
@@ -45,6 +46,8 @@ main section {
     color: var(--text-primary-color);
 }
 
+/* left section */
+
 main section .left{
     display: flex;
     flex-direction: column;
@@ -59,11 +62,13 @@ main section .top {
     gap: var(--gutter-md);
 }
 
+/* bottom section */
+
 main section .bottom {
     background-color: var(--bg-secondary-color);
     width: 100%;
     padding: var(--padding-2xl);
-    aspect-ratio: 5/3;
+    aspect-ratio: 4/3;
     border-radius: var(--border-radius-xl);
     display: flex;
     justify-content: center;
@@ -98,12 +103,44 @@ main section .right {
     gap: var(--gutter-md);
 }
 
+main section .right .filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gutter-md);
+}
+
 main section .right .filter {
     width: 100%;
 }
 
+/* input custom creation */
 main section .right .filter input {
     width: 100%;
     outline: none;
     margin-top: var(--margin-sm);
+    appearance: none;
+}
+
+/* input bar */
+main section .right .filter input::-webkit-slider-runnable-track {
+    background-color: var(--bg-active-color);
+    height: 3px;
+    border-radius: 2px;
+}
+
+/* inside input circle */
+main section .right .filter input::-webkit-slider-thumb {
+    cursor: pointer;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    margin-top: -8.5px;
+}
+
+canvas {
+    background-color: #fff;
+    max-width: 90%;
+    max-height: 80vh;
 }
