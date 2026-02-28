@@ -1,4 +1,4 @@
-const filters = {
+let filters = {
   brightness: {
     value: 100,
     min: 0,
@@ -6,12 +6,6 @@ const filters = {
     unit: "%",
   },
   contrast: {
-    value: 100,
-    min: 0,
-    max: 200,
-    unit: "%",
-  },
-  exposure: {
     value: 100,
     min: 0,
     max: 200,
@@ -66,6 +60,9 @@ const canvasImage = document.querySelector('#canvas-image');
 const canvasContext = canvasImage.getContext('2d');
 const imgSelectorInput = document.querySelector('#image-input');
 const inputPlaceholder = document.querySelector('.placeholder');
+const resetBtn = document.querySelector("#reset-btn")
+let file = null;
+let image = null;
 
 
 
@@ -86,6 +83,11 @@ function createFiltersEle(name, unit = "%", value, min, max) {
   div.appendChild(p);
   div.appendChild(input);
 
+  input.addEventListener('input', (e) => {
+    filters[name].value = input.value;
+    applyFiltersToCanvas()
+  })
+
   return div;
 }
 
@@ -103,7 +105,8 @@ Object.keys(filters).forEach((key) => {
 });
 
 imgSelectorInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
+    file = e.target.files[0];
+    canvasImage.style.display = 'block';
     inputPlaceholder.style.display = 'none';
 
     const img = new Image();
@@ -111,8 +114,85 @@ imgSelectorInput.addEventListener('change', (e) => {
     img.src = URL.createObjectURL(file);
 
     img.onload = () => {
+      image = img;
         canvasImage.width = img.width;
         canvasImage.height = img.height;
         canvasContext.drawImage(img, 0, 0)
     }
+})
+
+function applyFiltersToCanvas() {
+  canvasContext.clearRect(0, 0, canvasImage.width, canvasImage.height);
+  canvasContext.filter = `
+        brightness(${filters.brightness.value}${filters.brightness.unit})
+        contrast(${filters.contrast.value}${filters.contrast.unit})
+        saturate(${filters.saturation.value}${filters.saturation.unit})
+        hue-rotate(${filters.hueRotation.value}${filters.hueRotation.unit})
+        blur(${filters.blur.value}${filters.blur.unit})
+        grayScale(${filters.grayScale.value}${filters.grayScale.unit})
+        sepia(${filters.sepia.value}${filters.sepia.unit})
+        opacity(${filters.opacity.value}${filters.opacity.unit})
+        invert(${filters.invert.value}${filters.invert.unit})
+  `
+  canvasContext.drawImage(image, 0, 0);
+}
+
+resetBtn.addEventListener('click', () => {
+  filters = {
+  brightness: {
+    value: 100,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  contrast: {
+    value: 100,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  saturation: {
+    value: 100,
+    min: 0,
+    max: 200,
+    unit: "%",
+  },
+  hueRotation: {
+    value: 0,
+    min: 0,
+    max: 360,
+    unit: "deg",
+  },
+  blur: {
+    value: 0,
+    min: 0,
+    max: 20,
+    unit: "px",
+  },
+  grayScale: {
+    value: 0,
+    min: 0,
+    max: 100,
+    unit: "%",
+  },
+  sepia: {
+    value: 0,
+    min: 0,
+    max: 100,
+    unit: "%",
+  },
+  opacity: {
+    value: 100,
+    min: 0,
+    max: 100,
+    unit: "%",
+  },
+  invert: {
+    value: 0,
+    min: 0,
+    max: 100,
+    unit: "%",
+  },
+};
+  applyFiltersToCanvas()
 })
