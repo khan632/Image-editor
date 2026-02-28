@@ -1,8 +1,11 @@
 /*
-
-
-
-
+function functionalities:
+1. createFiltersEle: this will create filters element on UI.
+2. createFilters: this will create main element by calling createFilterEle function on filters object
+3. applyFiltersToCanvas: this will apply filter to selected image of canvas
+4. imgSelectorInput: select image and load on canvas
+5. resetBtn: reset all filters which is applied on canvas and filter elemnt will goes to initail condition
+6. downloadBtn: this will download filtered image.
 */
 
 let filters = {
