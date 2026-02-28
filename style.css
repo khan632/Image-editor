@@ -145,6 +145,12 @@ canvas {
     display: none;
 }
 
+.preset{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gutter-sm);
+}
+
 /* ── Tablet (≤ 1024px) ── */
 @media (max-width: 1024px) {
     main section .left {

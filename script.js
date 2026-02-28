@@ -65,6 +65,130 @@ let filters = {
   },
 };
 
+const presetFilters = {
+  drama: {
+    brightness: 90,
+    contrast: 150,
+    saturation: 120,
+    hueRotation: 0,
+    blur: 0,
+    grayScale: 0,
+    sepia: 0,
+    opacity: 100,
+    invert: 0,
+  },
+  vintage: {
+    brightness: 105,
+    contrast: 90,
+    saturation: 75,
+    hueRotation: 15,
+    blur: 0,
+    grayScale: 10,
+    sepia: 40,
+    opacity: 100,
+    invert: 0,
+  },
+  oldSchool: {
+    brightness: 95,
+    contrast: 110,
+    saturation: 0,
+    hueRotation: 0,
+    blur: 0,
+    grayScale: 100,
+    sepia: 20,
+    opacity: 100,
+    invert: 0,
+  },
+  faded: {
+    brightness: 115,
+    contrast: 80,
+    saturation: 70,
+    hueRotation: 0,
+    blur: 0,
+    grayScale: 15,
+    sepia: 20,
+    opacity: 85,
+    invert: 0,
+  },
+  noir: {
+    brightness: 80,
+    contrast: 160,
+    saturation: 0,
+    hueRotation: 0,
+    blur: 0,
+    grayScale: 100,
+    sepia: 0,
+    opacity: 100,
+    invert: 0,
+  },
+  dreamy: {
+    brightness: 115,
+    contrast: 85,
+    saturation: 80,
+    hueRotation: 20,
+    blur: 1.5,
+    grayScale: 0,
+    sepia: 15,
+    opacity: 95,
+    invert: 0,
+  },
+  cyberpunk: {
+    brightness: 110,
+    contrast: 140,
+    saturation: 180,
+    hueRotation: 190,
+    blur: 0,
+    grayScale: 0,
+    sepia: 0,
+    opacity: 100,
+    invert: 0,
+  },
+  sunset: {
+    brightness: 110,
+    contrast: 110,
+    saturation: 150,
+    hueRotation: 340,
+    blur: 0,
+    grayScale: 0,
+    sepia: 30,
+    opacity: 100,
+    invert: 0,
+  },
+  horror: {
+    brightness: 70,
+    contrast: 170,
+    saturation: 50,
+    hueRotation: 0,
+    blur: 0.5,
+    grayScale: 40,
+    sepia: 10,
+    opacity: 100,
+    invert: 10,
+  },
+  polaroid: {
+    brightness: 110,
+    contrast: 85,
+    saturation: 90,
+    hueRotation: 5,
+    blur: 0,
+    grayScale: 0,
+    sepia: 25,
+    opacity: 100,
+    invert: 0,
+  },
+  arctic: {
+    brightness: 120,
+    contrast: 95,
+    saturation: 60,
+    hueRotation: 180,
+    blur: 0,
+    grayScale: 20,
+    sepia: 0,
+    opacity: 100,
+    invert: 0,
+  },
+};
+
 const filterContainer = document.querySelector(".filters");
 const canvasImage = document.querySelector("#canvas-image");
 const canvasContext = canvasImage.getContext("2d");
@@ -72,6 +196,7 @@ const imgSelectorInput = document.querySelector("#image-input");
 const inputPlaceholder = document.querySelector(".placeholder");
 const resetBtn = document.querySelector("#reset-btn");
 const downloadBtn = document.querySelector('#download-btn');
+const presentContainer = document.querySelector('.preset')
 let file = null;
 let image = null;
 
@@ -216,4 +341,23 @@ downloadBtn.addEventListener('click', (e) => {
   link.download = 'edited-image.png';
   link.href = canvasImage.toDataURL();
   link.click();
+});
+
+Object.keys(presetFilters).forEach(presetName => {
+  const presetBtn = document.createElement('button');
+  presetBtn.classList.add('btn')
+  presetBtn.innerText = presetName;
+  presentContainer.appendChild(presetBtn);
+
+  presetBtn.addEventListener('click', () => {
+    const preset = presetFilters[presetName];
+
+    Object.keys(preset).forEach(filterName => {
+      filters[filterName].value = preset[filterName];
+      console.log(filters);
+      
+      applyFiltersToCanvas();
+      
+    })
+  })
 })
